@@ -1472,7 +1472,11 @@ static CURLMcode multi_runsingle(struct Curl_multi *multi,
         break;
       }
 
-      if(!result) {
+      if(result) {
+        /* failure detected */
+        stream_error = TRUE;
+      }
+      else {
         /* Add this handle to the send or pend pipeline */
         result = Curl_add_handle_to_pipeline(data, data->easy_conn);
         if(result)
